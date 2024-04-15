@@ -9,7 +9,7 @@ import {
   TrackPublication,
 } from "livekit-client";
 import { useEffect, useMemo, useState } from "react";
-import { TrackPosition } from "./SpatialAudioController";
+import { TrackPosition } from "./HRTFController";
 
 type Props = {
   jukeBoxPosition: Vector2;

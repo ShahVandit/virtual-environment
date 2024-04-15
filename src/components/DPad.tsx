@@ -13,8 +13,6 @@ export const DPad = ({ onInput }: Props) => {
     const boundingRect = container.current.getBoundingClientRect();
     const paddedHeight = boundingRect.height * 0.8;
 
-    // pad by 10px on each side to make it easier to acheive max input
-    // clamp to -1 to 1 and invert y
     const x = Math.max(
       Math.min(
         (2 * (e.touches[0].clientX - boundingRect.left - 10)) /

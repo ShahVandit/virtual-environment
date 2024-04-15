@@ -13,6 +13,7 @@ export function UsernameInput({ submitText, onSubmit }: Props) {
         e.preventDefault();
         onSubmit(username);
       }}
+      style={{ backgroundColor: "rgb(257, 250, 0)" }} // Change the RGB values to your desired mixed color
     >
       <div className="form-control">
         <div className="input-group">

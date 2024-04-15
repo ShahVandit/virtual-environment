@@ -44,9 +44,6 @@ export function Character({
   );
 
   return (
-    // @ts-ignore
-    // pixi-react types don't support React 18 yet
-    // See: https://github.com/pixijs/pixi-react/issues/350
     <Container position={[x, y]} zIndex={y} sortableChildren={true}>
       <Text
         anchor={[0.5, 1]}

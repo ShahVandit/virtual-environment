@@ -10,12 +10,12 @@ import { Container } from "@pixi/react";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import useResizeObserver from "use-resize-observer";
 import { Character } from "./Character";
-import { InputController } from "@/controller/InputController";
+import { DirectionController } from "@/controller/DirectionController";
 import { useGameState } from "@/model/GameState";
 import { MyCharacterController } from "@/controller/MyCharacterController";
 import { MyPlayerSpawnController } from "@/controller/MyPlayerSpawnController";
 import { ConnectionState } from "livekit-client";
-import { SpatialAudioController } from "@/controller/SpatialAudioController";
+import { SpatialAudioController } from "@/controller/HRTFController";
 import { RemotePlayersController } from "@/controller/RemotePlayersController";
 import { WorldBoundaryController } from "@/controller/WorldBoundaryController";
 import { World } from "./World";
@@ -74,7 +74,7 @@ export function GameView() {
 
   useEffect(() => {
     if (localParticipant) {
-      setMyPlayer((prev) => prev && { ...prev, character: "targ" });
+      setMyPlayer((prev) => prev && { ...prev, character: "mort" });
     }
   }, [localParticipant, setMyPlayer]);
 
@@ -123,7 +123,7 @@ export function GameView() {
           networkPositions={networkPositions}
           setRemotePlayers={setRemotePlayers}
         />
-        <InputController mobileInputs={mobileInputs} setInputs={setInputs} />
+        <DirectionController  updateInputs={setInputs} />
         <MyPlayerSpawnController
           localCharacter={localCharacter}
           myPlayer={myPlayer}

@@ -1,7 +1,7 @@
 "use client";
 
 import { WebAudioContext } from "@/providers/audio/webAudio";
-import { BottomBar } from "@/components/BottomBar";
+// import { BottomBar } from "@/components/BottomBar";
 import { RoomInfo } from "@/components/RoomInfo";
 import { UsernameInput } from "@/components/UsernameInput";
 import {
@@ -26,7 +26,7 @@ export default function Page({ params: { room_name } }: Props) {
   const [connectionDetails, setConnectionDetails] =
     useState<ConnectionDetails | null>(null);
   const [selectedCharacter, setSelectedCharacter] =
-    useState<CharacterName>("doux");
+    useState<CharacterName>("icon1");
   const isMobile = useMobile();
   const [audioContext, setAudioContext] = useState<AudioContext | null>(null);
 
@@ -123,7 +123,6 @@ export default function Page({ params: { room_name } }: Props) {
                 </div>
               </div>
               <div className="bg-neutral">
-                <BottomBar />
               </div>
             </div>
           </div>
