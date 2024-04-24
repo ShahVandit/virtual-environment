@@ -32,25 +32,7 @@ export function MyCharacterController({
         y: magnitude > 0 ? (inputs.direction.y * playerSpeed) / magnitude : 0,
       };
 
-      if (velocity.x > 0 && walking) {
-        newAnimation = "walk_right";
-      } else if (velocity.x < 0 && walking) {
-        newAnimation = "walk_left";
-      } else {
-        if (walking) {
-          if (prev.animation.endsWith("_right")) {
-            newAnimation = "walk_right";
-          } else {
-            newAnimation = "walk_left";
-          }
-        } else {
-          if (prev.animation.endsWith("_right")) {
-            newAnimation = "idle_right";
-          } else {
-            newAnimation = "idle_left";
-          }
-        }
-      }
+      newAnimation='walk'
 
       newPosition = {
         x: prev.position.x + velocity.x * delta,

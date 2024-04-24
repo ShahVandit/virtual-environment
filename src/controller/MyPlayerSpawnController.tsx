@@ -21,7 +21,7 @@ export function MyPlayerSpawnController({
       setMyPlayer({
         username: localParticipant.identity,
         position: { x: 10, y: 0 },
-        animation: "idle_left",
+        animation: "walk",
         character: localCharacter,
       });
     }

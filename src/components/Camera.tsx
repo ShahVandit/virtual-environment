@@ -10,11 +10,10 @@ export const Camera = ({ children, targetPosition }: Props) => {
   const app = useApp();
 
   return (
-    //@ts-ignore
     <Container
       pivot={[
-        targetPosition.x - app.screen.width / 2,
-        targetPosition.y - app.screen.height / 2,
+        targetPosition.x - app.screen.width/2,
+        targetPosition.y - app.screen.height/2,
       ]}
     >
       {children}

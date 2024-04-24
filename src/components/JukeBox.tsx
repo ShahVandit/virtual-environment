@@ -2,7 +2,7 @@ import { useJukeBox } from "@/controller/JukeBoxProvider";
 import { Vector2 } from "@/model/Vector2";
 import { Container, Graphics, Sprite, Text, useTick } from "@pixi/react";
 import { SCALE_MODES, TextStyle, Texture } from "pixi.js";
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 
 type Props = {
   position: Vector2;
@@ -13,27 +13,12 @@ const BASE_SCALE = 2;
 
 export const JukeBox = ({ position, backgroundZIndex }: Props) => {
   const { jukeBoxParticipant } = useJukeBox();
-  const [jukeboxY, setJukeboxY] = useState(0);
-  const [scale, setScale] = useState(BASE_SCALE);
 
   const jukeboxTexture = useMemo(() => {
     return Texture.from("/world/boombox.png", {
       scaleMode: SCALE_MODES.NEAREST,
     });
   }, []);
-
-  useTick(() => {
-    if (jukeBoxParticipant === null) {
-      setScale(BASE_SCALE);
-      setJukeboxY(0);
-      return;
-    }
-    const newScale =
-      BASE_SCALE + Math.abs(Math.sin((Date.now() * 8) / 1000) * 0.2);
-    const newY = Math.abs(Math.sin((Date.now() * 8) / 1000) * 0.2) * -30;
-    setScale(newScale);
-    setJukeboxY(newY);
-  });
 
   return (
     //@ts-ignore
@@ -60,8 +45,8 @@ export const JukeBox = ({ position, backgroundZIndex }: Props) => {
         />
       )}
       <Sprite
-        position={[0, jukeboxY]}
-        scale={scale}
+        position={[0, 0]}
+        scale={BASE_SCALE}
         anchor={[0.5, 0.5]}
         texture={jukeboxTexture}
       />

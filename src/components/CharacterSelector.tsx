@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-export type CharacterName = "doux" | "mort" | "targ" | "vita";
+export type CharacterName = "messi" | "ronaldo" | "neymar" | "haaland";
 
 type Props = {
   selectedCharacter: CharacterName;
@@ -16,42 +16,42 @@ export const CharacterSelector = ({
       <div className="flex">
         <div
           className="m-2 cursor-pointer"
-          onClick={() => onSelectedCharacterChange("doux")}
+          onClick={() => onSelectedCharacterChange("messi")}
         >
           <Character
-            name="doux"
-            image="/characters/doux_preview.png"
-            selected={selectedCharacter === "doux"}
+            name="messi"
+            image="/characters/icon1.png"
+            selected={selectedCharacter === "messi"}
           />
         </div>
         <div
           className="m-2 cursor-pointer"
-          onClick={() => onSelectedCharacterChange("mort")}
+          onClick={() => onSelectedCharacterChange("ronaldo")}
         >
           <Character
-            name="mort"
-            image="/characters/mort_preview.png"
-            selected={selectedCharacter === "mort"}
+            name="ronaldo"
+            image="/characters/icon2.png"
+            selected={selectedCharacter === "ronaldo"}
           />
         </div>
         <div
           className="m-2 cursor-pointer"
-          onClick={() => onSelectedCharacterChange("targ")}
+          onClick={() => onSelectedCharacterChange("neymar")}
         >
           <Character
-            name="targ"
-            image="/characters/targ_preview.png"
-            selected={selectedCharacter === "targ"}
+            name="neymar"
+            image="/characters/icon3.png"
+            selected={selectedCharacter === "neymar"}
           />
         </div>
         <div
           className="m-2 cursor-pointer"
-          onClick={() => onSelectedCharacterChange("vita")}
+          onClick={() => onSelectedCharacterChange("haaland")}
         >
           <Character
-            name="vita"
-            image="/characters/vita_preview.png"
-            selected={selectedCharacter === "vita"}
+            name="haaland"
+            image="/characters/icon4.png"
+            selected={selectedCharacter === "haaland"}
           />
         </div>
       </div>
@@ -70,7 +70,7 @@ const Character = ({
 }) => {
   return (
     <div className="flex flex-col items-center h-full">
-      <div className={`${selected ? "animate-bounce" : ""}`}>
+<div className={`${selected ? "border-4 border-blue-500" : "border"}`}>
         <Image
           quality={100}
           width={64}

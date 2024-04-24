@@ -1,75 +1,43 @@
-import { useJukeBox } from "@/controller/JukeBoxProvider";
-import { useMobile } from "@/util/useMobile";
 import { useCallback, useEffect, useMemo } from "react";
+import { useJukeBox } from "@/controller/JukeBoxProvider";
 
 export const JukeBoxModal = () => {
   const {
     playJukeBox,
     amIPlayingJukeBox,
     stopJukeBox,
-    jukeBoxTrack,
-    someoneElsePlayingJukeBox,
     jukeBoxParticipant,
+    someoneElsePlayingJukeBox,
   } = useJukeBox();
-
-  const isMobile = useMobile();
 
   const inner = useMemo(() => {
     if (amIPlayingJukeBox) {
       // I'm playing
-      return isMobile ? (
-        <div className="flex items-center">
-          <div className="text-neutral-content max-w-[300px]">
-            You are playing to the speaker
-          </div>
-          <button
-            className="btn btn-outline btn-sm btn-primary m-2"
-            onClick={stopJukeBox}
-          >
-            Stop
-          </button>
-        </div>
-      ) : (
-        <div className="text-neutral-content">
-          You are playing to the speaker. Press{" "}
-          <span className="font-bold">[x]</span> to stop.
+      return (
+        <div className="text-neutral-200">
+          Press <span className="font-bold">[x]</span> to stop.
         </div>
       );
     } else if (jukeBoxParticipant !== null) {
       // Someone else is playing
       return (
-        <div className="text-neutral-content">
-          <span className="font-bold">{jukeBoxParticipant}</span> is playing to
-          the speaker
+        <div className="text-neutral-200">
+          <span className="font-bold">{jukeBoxParticipant}</span> is playing to the speaker.
         </div>
       );
     } else {
       // No one is playing
-      return isMobile ? (
-        <div className="flex items-center">
-          <div className="text-neutral-content w-[300px]">
-            Want to listen to spatially groovy tunes over WebRTC? Press play.
-          </div>
-          <button
-            className="btn btn-outline btn-sm btn-primary m-2"
-            onClick={playJukeBox}
-          >
-            Play
-          </button>
-        </div>
-      ) : (
-        <div className="text-neutral-content max-w-[300px]">
-          Press <span className="font-bold">[x]</span> to play spatially groovy
-          tunes over WebRTC .
-        </div>
+      return (
+        <div className="text-white bg-blue-900 rounded-lg p-4 max-w-xs border border-blue-700 shadow-lg">
+       Press <span className="font-bold text-red-500">[x]</span> to play.
+</div>
+
       );
     }
   }, [
     amIPlayingJukeBox,
-    isMobile,
     jukeBoxParticipant,
-    playJukeBox,
-    stopJukeBox,
+    someoneElsePlayingJukeBox,
   ]);
 
   const keyDownListener = useCallback(
@@ -77,22 +45,20 @@ export const JukeBoxModal = () => {
       if (e.key === "x") {
         if (amIPlayingJukeBox) {
           stopJukeBox();
-        } else {
+        } else if (!someoneElsePlayingJukeBox) {
           playJukeBox();
         }
       }
     },
-    [amIPlayingJukeBox, playJukeBox, stopJukeBox]
+    [amIPlayingJukeBox, playJukeBox, stopJukeBox, someoneElsePlayingJukeBox]
   );
 
   useEffect(() => {
-    if (isMobile) return;
     document.addEventListener("keydown", keyDownListener);
-
     return () => {
       document.removeEventListener("keydown", keyDownListener);
     };
-  }, [isMobile, keyDownListener]);
+  }, [keyDownListener]);
 
   return (
     <div className="flex flex-col items-center p-4 bg-neutral rounded-md">

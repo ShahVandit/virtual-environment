@@ -1,9 +1,7 @@
 "use client";
 
-import { WebAudioContext } from "@/providers/audio/webAudio";
-import { BottomBar } from "@/components/BottomBar";
-import { RoomInfo } from "@/components/RoomInfo";
-import { UsernameInput } from "@/components/UsernameInput";
+import { WebAudioContext } from "@/providers/webAudio";
+import { AudioInputControlPanel } from "@/components/AudioInputControlPanel";
 import {
   ConnectionDetails,
   ConnectionDetailsBody,
@@ -17,18 +15,25 @@ import {
 } from "@/components/CharacterSelector";
 import { useMobile } from "@/util/useMobile";
 import { GameView } from "@/components/GameView";
+import { URLSearchParams } from "url";
+import { Participant } from "livekit-client";
+
 
 type Props = {
   params: { room_name: string };
+  searchParams?: { connectionDetails: string };
 };
+const Page: React.FC<Props> = ({ params, searchParams }) => {
+  const { room_name } = params;
+  const connectionDetailsString = searchParams?.connectionDetails;
 
-export default function Page({ params: { room_name } }: Props) {
-  const [connectionDetails, setConnectionDetails] =
-    useState<ConnectionDetails | null>(null);
-  const [selectedCharacter, setSelectedCharacter] =
-    useState<CharacterName>("doux");
+  // Use the defaultConnectionDetails if connectionDetailsString is not provided
+  const connectionDetails: ConnectionDetails = connectionDetailsString
+    ? JSON.parse(decodeURIComponent(connectionDetailsString))
+    : undefined;
   const isMobile = useMobile();
   const [audioContext, setAudioContext] = useState<AudioContext | null>(null);
+  console.log('connectionDetails ',connectionDetails)
 
   useEffect(() => {
     setAudioContext(new AudioContext());
@@ -43,64 +48,14 @@ export default function Page({ params: { room_name } }: Props) {
   const humanRoomName = useMemo(() => {
     return decodeURI(room_name);
   }, [room_name]);
-
-  const requestConnectionDetails = useCallback(
-    async (username: string) => {
-      const body: ConnectionDetailsBody = {
-        room_name,
-        username,
-        character: selectedCharacter,
-      };
-      const response = await fetch("/api/connection_details", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
-      });
-      if (response.status === 200) {
-        return response.json();
-      }
-
-      const { error } = await response.json();
-      throw error;
-    },
-    [room_name, selectedCharacter]
-  );
-
+  if (!connectionDetails) {
+    // Render a loading state or a message indicating that connectionDetails are not available
+    return <div>Loading...</div>;
+  }
   if (!audioContext) {
     return null;
   }
 
-  // If we don't have any connection details yet, show the username form
-  if (connectionDetails === null) {
-    return (
-      <div className="w-screen h-screen flex flex-col items-center justify-center">
-        <Toaster />
-        <h2 className="text-4xl mb-4">{humanRoomName}</h2>
-        <RoomInfo roomName={room_name} />
-        <div className="divider"></div>
-        <CharacterSelector
-          selectedCharacter={selectedCharacter}
-          onSelectedCharacterChange={setSelectedCharacter}
-        />
-        <UsernameInput
-          submitText="Join Room"
-          onSubmit={async (username) => {
-            try {
-              // TODO unify this kind of pattern across examples, either with the `useToken` hook or an equivalent
-              const connectionDetails = await requestConnectionDetails(
-                username
-              );
-              setConnectionDetails(connectionDetails);
-            } catch (e: any) {
-              toast.error(e);
-            }
-          }}
-        />
-      </div>
-    );
-  }
-
-  // Show the room UI
   return (
     <div>
       <LiveKitRoom
@@ -123,7 +78,7 @@ export default function Page({ params: { room_name } }: Props) {
                 </div>
               </div>
               <div className="bg-neutral">
-                <BottomBar />
+                <AudioInputControlPanel />
               </div>
             </div>
           </div>
@@ -132,3 +87,5 @@ export default function Page({ params: { room_name } }: Props) {
     </div>
   );
 }
+
+export default Page

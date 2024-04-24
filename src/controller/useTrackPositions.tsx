@@ -9,7 +9,7 @@ import {
   TrackPublication,
 } from "livekit-client";
 import { useEffect, useMemo, useState } from "react";
-import { TrackPosition } from "./SpatialAudioController";
+import { TrackPosition } from "./HRTFController";
 
 type Props = {
   jukeBoxPosition: Vector2;
@@ -39,7 +39,6 @@ export const useTrackPositions = ({
     let jukeboxTrackPublication: TrackPublication | null = null;
     let jukeboxParticipant: Participant | null = null;
 
-    // Memoize all of the remote microphone tracks and the jukebox track
     trackParticipantPairs.forEach((tpp) => {
       if (tpp.publication.trackName === "jukebox") {
         jukeboxTrackPublication = tpp.publication;

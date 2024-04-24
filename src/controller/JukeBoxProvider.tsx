@@ -10,7 +10,7 @@ import {
   TrackWithIdentity,
   useTracksByName,
 } from "@/util/useAudioTracksByName";
-import { useWebAudioContext } from "@/providers/audio/webAudio";
+import { useWebAudioContext } from "@/providers/webAudio";
 import { LocalTrack, LocalTrackPublication, Track } from "livekit-client";
 
 type Data = {
@@ -87,7 +87,7 @@ export const JukeBoxProvider = ({ children }: Props) => {
     // Stop any existing jukebox
     await stopJukeBox();
 
-    audioEl.current = new Audio("/disco.mp3");
+    audioEl.current = new Audio("/water.wav");
     audioEl.current.setAttribute("muted", "false");
     audioEl.current.setAttribute("loop", "true");
     audioEl.current.setAttribute("autoplay", "true");

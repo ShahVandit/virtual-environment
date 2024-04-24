@@ -18,19 +18,12 @@ const atlasDataGenerator = (name: CharacterName) => {
     meta: {
       image: `/characters/${name}.png`,
       format: "RGBA8888",
-      size: { w: 576, h: 24 },
+      size: { w: 24, h: 24 },
       scale: "0.32",
     },
     animations: {
-      walk: [
-        `4_${name}`,
-        `5_${name}`,
-        `6_${name}`,
-        `7_${name}`,
-        `8_${name}`,
-        `9_${name}`,
-      ],
-      idle: [`0_${name}`, `1_${name}`, `2_${name}`, `3_${name}`],
+      walk: [`0_${name}`],
+      idle: [`0_${name}`],
     },
   };
   for (let row = 0; row < 1; row++) {
@@ -71,10 +64,10 @@ type Data = {
 
 const defaultValue: Data = {
   animations: {
-    doux: { walk: [], idle: [] },
-    mort: { walk: [], idle: [] },
-    targ: { walk: [], idle: [] },
-    vita: { walk: [], idle: [] },
+    messi: { walk: [], idle: [] },
+    ronaldo: { walk: [], idle: [] },
+    neymar: { walk: [], idle: [] },
+    haaland: { walk: [], idle: [] },
   },
 };
 
@@ -94,12 +87,12 @@ export function AnimationsProvider({ children }: Props) {
 
   const loadAnimations = useCallback(async () => {
     const atlases = [
-      atlasDataGenerator("doux"),
-      atlasDataGenerator("mort"),
-      atlasDataGenerator("targ"),
-      atlasDataGenerator("vita"),
+      atlasDataGenerator("messi"),
+      atlasDataGenerator("ronaldo"),
+      atlasDataGenerator("neymar"),
+      atlasDataGenerator("haaland"),
     ];
-    const [doux, mort, targ, vita] = atlases.map(
+    const [messi, ronaldo, neymar, haaland] = atlases.map(
       (atlas) =>
         new Spritesheet(
           BaseTexture.from(atlas.meta.image, {
@@ -109,16 +102,16 @@ export function AnimationsProvider({ children }: Props) {
         )
     );
 
-    await doux.parse();
-    await mort.parse();
-    await targ.parse();
-    await vita.parse();
+    await messi.parse();
+    await ronaldo.parse();
+    await neymar.parse();
+    await haaland.parse();
 
     const animations: { [key in CharacterName]: Animations } = {
-      doux: { walk: doux.animations["walk"], idle: doux.animations["idle"] },
-      mort: { walk: mort.animations["walk"], idle: mort.animations["idle"] },
-      targ: { walk: targ.animations["walk"], idle: targ.animations["idle"] },
-      vita: { walk: vita.animations["walk"], idle: vita.animations["idle"] },
+      messi: { walk: messi.animations["walk"], idle: messi.animations["idle"] },
+      ronaldo: { walk: ronaldo.animations["walk"], idle: ronaldo.animations["idle"] },
+      neymar: { walk: neymar.animations["walk"], idle: neymar.animations["idle"] },
+      haaland: { walk: haaland.animations["walk"], idle: haaland.animations["idle"] },
     };
 
     setAnimations(animations);

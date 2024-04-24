@@ -9,23 +9,21 @@ import {
 import { Container } from "@pixi/react";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import useResizeObserver from "use-resize-observer";
-import { Character } from "./Character";
-import { InputController } from "@/controller/InputController";
+import { Character } from "./Avatar";
+import { DirectionController } from "@/controller/DirectionController";
 import { useGameState } from "@/model/GameState";
 import { MyCharacterController } from "@/controller/MyCharacterController";
 import { MyPlayerSpawnController } from "@/controller/MyPlayerSpawnController";
 import { ConnectionState } from "livekit-client";
-import { SpatialAudioController } from "@/controller/SpatialAudioController";
+import { HRTFController } from "@/controller/HRTFController";
 import { RemotePlayersController } from "@/controller/RemotePlayersController";
-import { WorldBoundaryController } from "@/controller/WorldBoundaryController";
+import { WorldBoundaryController } from "@/controller/EnvironmentArea";
 import { World } from "./World";
 import { Camera } from "./Camera";
-import { EarshotRadius } from "./EarshotRadius";
+import { AvatarArea } from "./AvatarArea";
 import { AnimationsProvider } from "@/providers/animations";
-import { Shadows } from "./Shadows";
-import { DPad } from "./DPad";
+import Slider from "./Slider";
 import { Inputs } from "@/model/Inputs";
-import { useMobile } from "@/util/useMobile";
 import { Stage } from "./Stage";
 import { JukeBox } from "./JukeBox";
 import { JukeBoxModal } from "./JukeBoxModal";
@@ -33,8 +31,12 @@ import { JukeBoxProvider } from "@/controller/JukeBoxProvider";
 import { useTrackPositions } from "@/controller/useTrackPositions";
 
 export function GameView() {
+  const [earshotRadius, setEarshotRadius] = useState(150);
+
+  const handleEarshotRadiusChange = (value:any) => {
+    setEarshotRadius(value);
+  }
   const { ref, width = 1, height = 1 } = useResizeObserver<HTMLDivElement>();
-  const mobile = useMobile();
   const connectionState = useConnectionState();
   const { localParticipant } = useLocalParticipant();
   const { metadata: localMetadata } = useParticipantInfo({
@@ -42,6 +44,8 @@ export function GameView() {
   });
   const localSpeaking = useIsSpeaking(localParticipant);
   const speakingParticipants = useSpeakingParticipants();
+  const gameState = useGameState();
+
   const {
     inputs,
     remotePlayers,
@@ -49,7 +53,7 @@ export function GameView() {
     networkAnimations,
     networkPositions,
     worldBoundaries,
-    earshotRadius,
+    // earshotRadius,
     backgroundZIndex,
     playerSpeed,
     jukeBoxPosition,
@@ -59,10 +63,6 @@ export function GameView() {
     setNetworkPositions,
     setRemotePlayers,
   } = useGameState();
-
-  const [mobileInputs, setMobileInputs] = useState<Inputs>({
-    direction: { x: 0, y: 0 },
-  });
 
   const speakingLookup = useMemo(() => {
     const lookup = new Set<string>();
@@ -74,7 +74,7 @@ export function GameView() {
 
   useEffect(() => {
     if (localParticipant) {
-      setMyPlayer((prev) => prev && { ...prev, character: "targ" });
+      setMyPlayer((prev) => prev && { ...prev, character: "neymar" });
     }
   }, [localParticipant, setMyPlayer]);
 
@@ -83,9 +83,6 @@ export function GameView() {
     [localMetadata]
   );
 
-  const onMobileInput = useCallback((x: number, y: number) => {
-    setMobileInputs({ direction: { x, y: -y } });
-  }, []);
 
   const distanceFromJukeBox = useMemo(() => {
     if (!myPlayer) return Infinity;
@@ -95,27 +92,30 @@ export function GameView() {
     );
   }, [jukeBoxPosition.x, jukeBoxPosition.y, myPlayer]);
 
-  const trackPositions = useTrackPositions({ remotePlayers, jukeBoxPosition });
+  const sliderPosition = useMemo(() => {
+    return { x: 100, y: 100 }; // Fixed position in the top-left corner, adjust as needed
+  }, []);
 
+  const trackPositions = useTrackPositions({ remotePlayers, jukeBoxPosition });
   if (connectionState !== ConnectionState.Connected) {
     return null;
   }
-
+  
   return (
     <div ref={ref} className="relative h-full w-full bg-red-400">
       <JukeBoxProvider>
         {myPlayer && (
-          <SpatialAudioController
-            myPosition={myPlayer.position}
-            trackPositions={trackPositions}
-            maxHearableDistance={earshotRadius}
+          <HRTFController
+          myPosition={myPlayer.position}
+          trackPositions={trackPositions}
+          maxHearableDistance={earshotRadius}
           />
         )}
         {myPlayer && (
           <NetcodeController
-            setNetworkAnimations={setNetworkAnimations}
-            setNetworkPositions={setNetworkPositions}
-            myPlayer={myPlayer}
+          setNetworkAnimations={setNetworkAnimations}
+          setNetworkPositions={setNetworkPositions}
+          myPlayer={myPlayer}
           />
         )}
         <RemotePlayersController
@@ -123,7 +123,7 @@ export function GameView() {
           networkPositions={networkPositions}
           setRemotePlayers={setRemotePlayers}
         />
-        <InputController mobileInputs={mobileInputs} setInputs={setInputs} />
+        <DirectionController updateInputs={setInputs} />
         <MyPlayerSpawnController
           localCharacter={localCharacter}
           myPlayer={myPlayer}
@@ -137,11 +137,6 @@ export function GameView() {
             </div>
           </div>
         )}
-        {mobile && (
-          <div className="absolute bottom-20 left-5 w-[120px] h-[120px] z-10">
-            <DPad onInput={onMobileInput} />
-          </div>
-        )}
         <Stage
           className="absolute top-0 left-0 bottom-0 right-0"
           raf={true}
@@ -150,9 +145,16 @@ export function GameView() {
           height={height}
           options={{ resolution: 2, backgroundColor: 0x509b66 }}
         >
+            <Slider
+            backgroundZIndex={100} // Ensure this zIndex puts it above other elements but adjust based on need
+            initialValue={150}
+            min={50}
+            max={250}
+            onChange={handleEarshotRadiusChange}
+            // position={sliderPosition}
+        />
           <AnimationsProvider>
             <Camera targetPosition={myPlayer?.position || { x: 0, y: 0 }}>
-              {/* @ts-ignore */}
               <Container anchor={[0.5, 0.5]} sortableChildren={true}>
                 <MyCharacterController
                   playerSpeed={playerSpeed}
@@ -161,9 +163,9 @@ export function GameView() {
                 />
                 {myPlayer && (
                   <WorldBoundaryController
-                    worldBoundaries={worldBoundaries}
-                    myPlayer={myPlayer}
-                    setMyPlayer={setMyPlayer}
+                  worldBoundaries={worldBoundaries}
+                  myPlayer={myPlayer}
+                  setMyPlayer={setMyPlayer}
                   />
                 )}
                 {myPlayer && (
@@ -174,20 +176,15 @@ export function GameView() {
                     y={myPlayer.position.y}
                     character={myPlayer.character}
                     animation={myPlayer.animation}
-                  />
-                )}
+                    />
+                  )}
                 <JukeBox
-                  backgroundZIndex={backgroundZIndex}
+                  backgroundZIndex={backgroundZIndex+1}
                   position={jukeBoxPosition}
                 />
                 <World
                   backgroundZIndex={backgroundZIndex}
                   worldBoundaries={worldBoundaries}
-                />
-                <Shadows
-                  backgroundZIndex={backgroundZIndex}
-                  myPlayer={myPlayer}
-                  remotePlayers={remotePlayers}
                 />
                 {remotePlayers.map((player) => (
                   <Character
@@ -200,7 +197,7 @@ export function GameView() {
                     animation={player.animation}
                   />
                 ))}
-                <EarshotRadius
+                <AvatarArea
                   backgroundZIndex={backgroundZIndex}
                   render={true}
                   earshotRadius={earshotRadius}
@@ -214,3 +211,4 @@ export function GameView() {
     </div>
   );
 }
+

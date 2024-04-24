@@ -25,7 +25,7 @@ export function RemotePlayersController({
     const lookup = new Map<string, CharacterName>();
     for (const rp of remoteParticipants) {
       const metadata = JSON.parse(rp.metadata || "{}");
-      lookup.set(rp.identity, metadata.character || ("doux" as CharacterName));
+      lookup.set(rp.identity, metadata.character || ("messi" as CharacterName));
     }
     return lookup;
   }, [remoteParticipants]);
@@ -52,7 +52,7 @@ export function RemotePlayersController({
             previousPlayersLookup.get(identity)?.position ||
             networkPositions.get(identity)!, // use the network position if we don't have a previous one
           animation: networkAnimations.get(identity)!,
-          character: remoteCharacterLookup.get(identity)! || "doux",
+          character: remoteCharacterLookup.get(identity)! || "messi",
         }));
 
       // Crude interpolation that tries to match the 0.1 second send interval
