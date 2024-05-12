@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo } from 'react';
 import { TrackPublication, RemoteTrackPublication } from 'livekit-client';
 import { PublicationRenderer } from './PublicationRenderer';
-import { Vector2 } from '@/model/Vector2';
+import { Vector2 } from '@/providers/playerData';
 
 type SpatialPublicationPlaybackProps = {
   maxHearableDistance: number;

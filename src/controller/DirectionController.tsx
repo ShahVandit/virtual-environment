@@ -1,4 +1,4 @@
-import { Inputs } from "@/model/Inputs";
+import { Inputs } from "@/providers/playerData";
 import { Dispatch, SetStateAction, useEffect } from "react";
 
 interface Props {

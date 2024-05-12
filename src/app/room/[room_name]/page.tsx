@@ -1,23 +1,11 @@
 "use client";
 
-import { WebAudioContext } from "@/providers/webAudio";
+import { SoundContext } from "@/providers/useSoundContext";
 import { AudioInputControlPanel } from "@/components/AudioInputControlPanel";
-import {
-  ConnectionDetails,
-  ConnectionDetailsBody,
-} from "@/pages/api/connection_details";
+import { ConnectionDetails } from "@/pages/api/connection_details";
 import { LiveKitRoom } from "@livekit/components-react";
-import { useCallback, useEffect, useMemo, useState } from "react";
-import { toast, Toaster } from "react-hot-toast";
-import {
-  CharacterName,
-  CharacterSelector,
-} from "@/components/CharacterSelector";
-import { useMobile } from "@/util/useMobile";
-import { GameView } from "@/components/GameView";
-import { URLSearchParams } from "url";
-import { Participant } from "livekit-client";
-
+import { useEffect, useMemo, useState } from "react";
+import { MainComponent } from "@/components/MainComponent";
 
 type Props = {
   params: { room_name: string };
@@ -31,9 +19,8 @@ const Page: React.FC<Props> = ({ params, searchParams }) => {
   const connectionDetails: ConnectionDetails = connectionDetailsString
     ? JSON.parse(decodeURIComponent(connectionDetailsString))
     : undefined;
-  const isMobile = useMobile();
   const [audioContext, setAudioContext] = useState<AudioContext | null>(null);
-  console.log('connectionDetails ',connectionDetails)
+  console.log('connectionDetails ', connectionDetails);
 
   useEffect(() => {
     setAudioContext(new AudioContext());
@@ -65,16 +52,12 @@ const Page: React.FC<Props> = ({ params, searchParams }) => {
         connectOptions={{ autoSubscribe: false }}
         options={{ expWebAudioMix: { audioContext } }}
       >
-        <WebAudioContext.Provider value={audioContext}>
+        <SoundContext.Provider value={audioContext}>
           <div className="flex h-screen w-screen">
-            <div
-              className={`flex ${
-                isMobile ? "flex-col-reverse" : "flex-col"
-              } w-full h-full`}
-            >
+            <div className="flex flex-col w-full h-full">
               <div className="grow flex">
                 <div className="grow">
-                  <GameView />
+                  <MainComponent />
                 </div>
               </div>
               <div className="bg-neutral">
@@ -82,10 +65,10 @@ const Page: React.FC<Props> = ({ params, searchParams }) => {
               </div>
             </div>
           </div>
-        </WebAudioContext.Provider>
+        </SoundContext.Provider>
       </LiveKitRoom>
     </div>
   );
-}
+};
 
-export default Page
+export default Page;

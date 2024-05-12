@@ -21,7 +21,7 @@ interface PixiPointerEvent extends PointerEvent {
   data: PixiPointerData;
 }
 
-const Slider = ({ backgroundZIndex, initialValue, min = 50, max = 250, onChange }: Props) => {
+const Slider = ({ initialValue, min = 50, max = 250, onChange }: Props) => {
   const [value, setValue] = useState(initialValue - min);
   const [isDragging, setIsDragging] = useState(false);
 
@@ -56,7 +56,7 @@ const Slider = ({ backgroundZIndex, initialValue, min = 50, max = 250, onChange 
   return (
     <>
       <GraphicsComponent
-        zIndex={backgroundZIndex + 1}
+        zIndex={1000}
         draw={(g) => {
           g.clear();
           g.beginFill(0xffffff);

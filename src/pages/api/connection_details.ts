@@ -4,12 +4,12 @@ import livekitServer, {
   AccessToken,
   RoomServiceClient,
 } from "livekit-server-sdk";
-import { CharacterName } from "@/components/CharacterSelector";
+import { PlayerType } from "@/components/AvatarPicker";
 
 export type ConnectionDetailsBody = {
   room_name: string;
   username: string;
-  character: CharacterName;
+  character: PlayerType;
 };
 
 export type ConnectionDetails = {

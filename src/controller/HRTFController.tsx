@@ -1,8 +1,8 @@
 import React from 'react';
 import { TrackPublication, RemoteTrackPublication } from 'livekit-client';
 import { HRTFPlayback } from './HRTFPlayback';
-import { useWebAudioContext } from '../providers/webAudio';
-import { Vector2 } from '@/model/Vector2';
+import { useSoundContext } from '../providers/useSoundContext';
+import { Vector2 } from '@/providers/playerData';
 
 export type TrackPosition = {
   trackPublication: TrackPublication;
@@ -20,7 +20,7 @@ export const HRTFController: React.FC<HRTFControllerProps> = ({
   trackPositions,
   maxHearableDistance,
 }) => {
-  const audioContext = useWebAudioContext();
+  const audioContext = useSoundContext();
   if (!audioContext) return null;
 
   return (

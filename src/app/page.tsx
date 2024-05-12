@@ -5,13 +5,13 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useCallback, useState } from "react";
 import { toast, Toaster } from "react-hot-toast";
-import { CharacterSelector, CharacterName } from "@/components/CharacterSelector";
+import { AvatarPicker, PlayerType } from "@/components/AvatarPicker";
 
 export default function Home() {
   const router = useRouter();
   const [roomName, setRoomName] = useState("");
   const [username, setUsername] = useState("");
-  const [selectedCharacter, setSelectedCharacter] = useState<CharacterName>("messi");
+  const [selectedCharacter, setSelectedCharacter] = useState<PlayerType>("messi");
 
   const joinRoom = useCallback(async () => {
     if (roomName === "" || username === "") {
@@ -60,8 +60,8 @@ export default function Home() {
         alignItems: 'center',
         justifyContent: 'center',
         width: '100%',
-        maxWidth: '600px', // Set a max width for form elements
-        backgroundColor: 'rgba(255, 255, 255, 0.8)', // Slight transparency
+        maxWidth: '600px',
+        backgroundColor: 'rgba(255, 255, 255, 0.8)',
         padding: '20px',
         borderRadius: '10px',
         boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)'
@@ -110,18 +110,15 @@ export default function Home() {
               }}
             />
           </label>
-          <CharacterSelector
-            selectedCharacter={selectedCharacter}
-            onSelectedCharacterChange={setSelectedCharacter}
-            // style={{
-            //   marginTop: '1rem'
-            // }}
+          <AvatarPicker
+            selectedAvatar={selectedCharacter}
+            onAvatarChange={setSelectedCharacter}
           />
           <button
             className="btn mt-4"
             onClick={joinRoom}
             style={{
-              backgroundColor: '#4CAF50', // A vibrant, energetic green
+              backgroundColor: '#4CAF50',
               color: 'white',
               padding: '10px 20px',
               borderRadius: '5px',

@@ -1,9 +1,9 @@
 "use-client";
 
-import { CharacterName } from "@/components/CharacterSelector";
-import { AnimationState } from "@/model/AnimationState";
-import { Player } from "@/model/Player";
-import { Vector2 } from "@/model/Vector2";
+import { PlayerType } from "@/components/AvatarPicker";
+import { AnimationState } from "@/providers/playerData";
+import { Player } from "@/providers/playerData";
+import { Vector2 } from "@/providers/playerData";
 import { useRemoteParticipants } from "@livekit/components-react";
 import { Dispatch, SetStateAction, useCallback, useMemo, useRef } from "react";
 import { useInterval } from "react-use";
@@ -22,10 +22,10 @@ export function RemotePlayersController({
   const remoteParticipants = useRemoteParticipants({});
 
   const remoteCharacterLookup = useMemo(() => {
-    const lookup = new Map<string, CharacterName>();
+    const lookup = new Map<string, PlayerType>();
     for (const rp of remoteParticipants) {
       const metadata = JSON.parse(rp.metadata || "{}");
-      lookup.set(rp.identity, metadata.character || ("messi" as CharacterName));
+      lookup.set(rp.identity, metadata.character || ("messi" as PlayerType));
     }
     return lookup;
   }, [remoteParticipants]);

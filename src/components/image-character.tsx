@@ -1,15 +1,15 @@
 import React, { useMemo } from 'react';
 import { Container, Sprite, Text } from '@pixi/react';
 import { TextStyle } from 'pixi.js';
-import { CharacterName } from "./CharacterSelector";
-import { useImages } from '@/providers/imageprovider'; // Adjust import according to your project structure
+import { PlayerType } from "./AvatarPicker";
+import { useImages } from '@/providers/imageprovider';
 
 type Props = {
   x: number;
   y: number;
   speaking: boolean;
   username: string;
-  character: CharacterName;
+  character: PlayerType;
 };
 
 export function Character1({
@@ -19,7 +19,7 @@ export function Character1({
   speaking,
   character,
 }: Props) {
-  const images = useImages(); // This now refers to the hook that provides static images
+  const images = useImages();
   
   const textStyle = useMemo(() => {
     return new TextStyle({
@@ -41,7 +41,6 @@ export function Character1({
       {images[character] && (
         <Sprite
           anchor={[0.5, 0.65]}
-        //   texture={images[character]}
         />
       )}
     </Container>

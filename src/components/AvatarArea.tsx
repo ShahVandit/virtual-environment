@@ -1,4 +1,4 @@
-import { Vector2 } from "@/model/Vector2";
+import { Vector2 } from "@/providers/playerData";
 import { Graphics } from "pixi.js";
 import { Graphics as GraphicsComponent } from "@pixi/react";
 import { useCallback } from "react";

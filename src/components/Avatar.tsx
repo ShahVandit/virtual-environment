@@ -1,20 +1,19 @@
-import { AnimationState } from "@/model/AnimationState";
-import { useAnimations } from "@/providers/animations";
+import { useCharacters } from "@/providers/CharacterProvider";
 import { AnimatedSprite, Container, Text } from "@pixi/react";
 import { TextStyle } from "pixi.js";
 import { useMemo } from "react";
-import { CharacterName } from "./CharacterSelector";
+import { PlayerType } from "./AvatarPicker";
 
 type Props = {
   x: number;
   y: number;
   speaking: boolean;
   username: string;
-  animation: AnimationState;
-  character: CharacterName;
+  animation: "walk";
+  character: PlayerType;
 };
 
-export function Character({
+export function Avatar({
   x,
   y,
   username,
@@ -22,7 +21,7 @@ export function Character({
   speaking,
   character,
 }: Props) {
-  const animationSheet = useAnimations(character);
+  const animationSheet = useCharacters(character);
 
   const { color: usernameOutlineColor, thickness: usernameOutlineThickness } =
     useMemo(() => {

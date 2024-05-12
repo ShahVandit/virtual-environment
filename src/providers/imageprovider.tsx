@@ -1,10 +1,9 @@
 import React, { useContext, useEffect, useState, createContext } from "react";
 import { BaseTexture, Texture, SCALE_MODES } from "pixi.js";
-import { CharacterName } from "@/components/CharacterSelector";
+import { PlayerType } from "@/components/AvatarPicker";
 
-// Define a simpler data structure that only includes a texture for each character
 type ImageData = {
-  textures: { [key in CharacterName]: Texture | null };
+  textures: { [key in PlayerType]: Texture | null };
 };
 
 const defaultImageData: ImageData = {
@@ -24,7 +23,7 @@ type Props = {
   };
   
   export const ImageProvider = ({ children }: Props) => {
-    const [textures, setTextures] = useState<{ [key in CharacterName]: Texture | null }>({
+    const [textures, setTextures] = useState<{ [key in PlayerType]: Texture | null }>({
       messi: null,
       ronaldo: null,
       neymar: null,
@@ -34,8 +33,8 @@ type Props = {
     useEffect(() => {
       // Load textures for each character
       const loadTextures = async () => {
-        const characters: CharacterName[] = ["messi", "ronaldo", "neymar", "haaland"];
-        const loadedTextures: { [key in CharacterName]: Texture | null } = {
+        const characters: PlayerType[] = ["messi", "ronaldo", "neymar", "haaland"];
+        const loadedTextures: { [key in PlayerType]: Texture | null } = {
           messi: null,
           ronaldo: null,
           neymar: null,

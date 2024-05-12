@@ -1,8 +1,14 @@
 import React from 'react';
 import { useMediaDeviceSelect, useRoomContext, TrackToggle } from "@livekit/components-react";
 import { Track } from "livekit-client";
-
+import Slider from './Slider';
+import { useState } from 'react';
 export function AudioInputControlPanel() {
+  const [earshotRadius, setEarshotRadius] = useState(150);
+
+  const handleEarshotRadiusChange = (value:any) => {
+    setEarshotRadius(value);
+  }
   const roomContext = useRoomContext();
   const {
     devices: audioDevices,
@@ -13,8 +19,7 @@ export function AudioInputControlPanel() {
     room: roomContext
   });
 
-  // Prevent keyboard interaction with the select element
-  const preventKeyInteraction = (event) => {
+  const preventKeyInteraction = (event:any) => {
     event.preventDefault();
   };
 
@@ -30,6 +35,14 @@ export function AudioInputControlPanel() {
         
         <div className="px-4">
           <div className="flex items-center">
+          <Slider
+            backgroundZIndex={100}
+            initialValue={150}
+            min={50}
+            max={250}
+            onChange={handleEarshotRadiusChange}
+            // position={sliderPosition}
+        />
             <select
               onChange={(e) => selectAudioDevice(e.currentTarget.value)}
               onKeyDown={preventKeyInteraction}
@@ -47,6 +60,8 @@ export function AudioInputControlPanel() {
             </select>
           </div>
         </div>
+
+
       </div>
     </div>
   );

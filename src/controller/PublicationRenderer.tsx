@@ -1,8 +1,9 @@
+
 import React, { useEffect, useRef, useCallback } from 'react';
 import { TrackPublication } from 'livekit-client';
-import { useWebAudioContext } from '../providers/webAudio';
-import { AudioMediaStream } from './AudioMediaStream'; 
-import { Vector2 } from '@/model/Vector2';
+import { useSoundContext } from '../providers/useSoundContext';
+import { AudioMediaStream } from '../providers/AudioMediaStream'; 
+import { Vector2 } from '@/providers/playerData';
 
 type PublicationRendererProps = {
   trackPublication: TrackPublication;
@@ -18,7 +19,7 @@ export const PublicationRenderer: React.FC<PublicationRendererProps> = ({
   maxHearableDistance,
 }) => {
   const audioEl = useRef<HTMLAudioElement>(null);
-  const audioContext = useWebAudioContext();
+  const audioContext = useSoundContext();
   const mediaStream = AudioMediaStream(trackPublication);
   const panner = useRef<PannerNode | null>(null);
   const gainNode = useRef<GainNode | null>(null);
@@ -46,10 +47,10 @@ export const PublicationRenderer: React.FC<PublicationRendererProps> = ({
     panner.current.orientationY.setValueAtTime(0, audioContext.currentTime);
     panner.current.orientationZ.setValueAtTime(-1, audioContext.currentTime);
     panner.current.panningModel = 'HRTF';
-    panner.current.distanceModel = 'inverse'; // decrease volume on increasing distance
-    panner.current.refDistance = 150; // pre-set max distance
+    panner.current.distanceModel = 'inverse'; 
+    panner.current.refDistance = 150;
     panner.current.maxDistance = maxHearableDistance;
-    panner.current.rolloffFactor = 5;   // sensitivity of changing volume
+    panner.current.rolloffFactor = 5;
 
     // Connect the nodes properly
     audioSourceNode.connect(panner.current).connect(gainNode.current).connect(audioContext.destination);
