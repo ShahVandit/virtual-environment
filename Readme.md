@@ -46,7 +46,3 @@ Our project involved crucial design decisions aimed at enhancing the perceptual 
 ### 3. Customizable Audio Settings
 - **Description**: Provided a feature that allows users to adjust audio settings according to their personal preferences and needs.
 - **Purpose**: This design decision enables users to tailor the auditory experience to their liking, accommodating a wide range of auditory sensitivities and preferences. It ensures that the environment is accessible and enjoyable for all users, making the virtual space more adaptable and user-friendly.
-
-## Authors
- **Vandit Shah**
- **Rutika Shinde**
