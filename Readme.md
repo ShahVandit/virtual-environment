@@ -31,7 +31,7 @@ After installing the dependencies, you can start the development server with the
 1. Run the command `npm run dev`
 2. Open `localhost:3000` on browser to use the application
 
-## Name 3 design decisions that you made, as a perceptual consideration for the user
+## 3 design decisions that made, as a perceptual consideration for the user
 
 Our project involved crucial design decisions aimed at enhancing the perceptual experience for users in the virtual environment. Below are three significant decisions we made:
 
