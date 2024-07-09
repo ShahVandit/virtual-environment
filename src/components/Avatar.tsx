@@ -1,7 +1,7 @@
 import { useCharacters } from "@/providers/CharacterProvider";
 import { AnimatedSprite, Container, Text } from "@pixi/react";
 import { TextStyle } from "pixi.js";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { PlayerType } from "./AvatarPicker";
 
 type Props = {
@@ -23,7 +23,7 @@ export function Avatar({
 }: Props) {
   const animationSheet = useCharacters(character);
 
-  const { color: usernameOutlineColor, thickness: usernameOutlineThickness } =
+  const { color:usernameOutlineColor, thickness:usernameOutlineThickness } =
     useMemo(() => {
       if (speaking) {
         return { color: 0x00ff00, thickness: 6 };

@@ -66,7 +66,7 @@ const defaultValue: CharacterAnimationsData = {
 };
 
 const CharacterAnimationsContext = React.createContext<{
-  _provider: boolean;
+  _provider:boolean,
   data: CharacterAnimationsData;
 }>({
   _provider: false,

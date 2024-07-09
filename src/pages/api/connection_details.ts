@@ -21,7 +21,7 @@ type ErrorResponse = {
   error: string;
 };
 
-export default async function handler(
+export default async function lol(
   req: NextApiRequest,
   res: NextApiResponse<ConnectionDetails | ErrorResponse>
 ) {
