@@ -1,3 +1,5 @@
+
+export const ConvolverNode={}
 // import React, { useEffect, useRef, useCallback } from 'react';
 // import { TrackPublication } from 'livekit-client';
 // import { useSoundContext } from '../providers/useSoundContext';
@@ -12,7 +14,17 @@
 //   maxHearableDistance: number;
 // };
 
-
+// type HRTFDataType = {
+//     [key: string]: number[][];
+//   };
+  
+//   const hrtfDataTyped: HRTFDataType = hrtfData;
+  
+//   // Function to get HRTF data
+//   const getHRTFData = (azimuth: number): number[][] | undefined => {
+//     const key = azimuth.toString();
+//     return hrtfDataTyped[key];
+//   };
 
 // export const PublicationRenderer: React.FC<PublicationRendererProps> = ({
 //   trackPublication,
@@ -45,9 +57,8 @@
 //     if (azimuth < 0) {
 //       azimuth += 360; 
 //     }
-// const roundedAzimuth = Math.round(azimuth / 5) * 5;
-
-// const hrtfData1 = hrtfData[roundedAzimuth];
+//     const roundedAzimuth = 0; // This value will be dynamically calculated in your application
+//     const hrtfData1 = getHRTFData(roundedAzimuth);
 // if (!hrtfData1) return;
 
 // const hrtfBuffer = audioContext.createBuffer(2, hrtfData1[0].length, audioContext.sampleRate);

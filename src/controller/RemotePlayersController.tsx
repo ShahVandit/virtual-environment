@@ -1,7 +1,7 @@
 "use-client";
 
-import { PlayerType } from "@/components/AvatarPicker";
-import { AnimationState } from "@/providers/playerData";
+import { PlayerTypes } from "@/components/AvatarPicker";
+import { AnimationState, PlayerType } from "@/providers/playerData";
 import { Player } from "@/providers/playerData";
 import { Vector2 } from "@/providers/playerData";
 import { useRemoteParticipants } from "@livekit/components-react";
@@ -25,7 +25,7 @@ export function RemotePlayersController({
     const lookup = new Map<string, PlayerType>();
     for (const rp of remoteParticipants) {
       const metadata = JSON.parse(rp.metadata || "{}");
-      lookup.set(rp.identity, metadata.character || ("messi" as PlayerType));
+      lookup.set(rp.identity, metadata.character || ("messi" as PlayerTypes));
     }
     return lookup;
   }, [remoteParticipants]);
