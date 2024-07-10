@@ -31,7 +31,7 @@ After installing the dependencies, you can start the development server with the
 1. Run the command `npm run dev`
 2. Open `localhost:3000` on browser to use the application
 
-## Name 3 design decisions that you made, as a perceptual consideration for the user
+## 3 design decisions that were made, as a perceptual consideration for the user
 
 Our project involved crucial design decisions aimed at enhancing the perceptual experience for users in the virtual environment. Below are three significant decisions we made:
 
@@ -46,7 +46,3 @@ Our project involved crucial design decisions aimed at enhancing the perceptual 
 ### 3. Customizable Audio Settings
 - **Description**: Provided a feature that allows users to adjust audio settings according to their personal preferences and needs.
 - **Purpose**: This design decision enables users to tailor the auditory experience to their liking, accommodating a wide range of auditory sensitivities and preferences. It ensures that the environment is accessible and enjoyable for all users, making the virtual space more adaptable and user-friendly.
-
-## Authors
- **Vandit Shah**
- **Rutika Shinde**
