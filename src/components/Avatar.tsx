@@ -2,7 +2,7 @@ import { useCharacters } from "@/providers/CharacterProvider";
 import { AnimatedSprite, Container, Text } from "@pixi/react";
 import { TextStyle } from "pixi.js";
 import { useEffect, useMemo } from "react";
-import { PlayerType } from "./AvatarPicker";
+import { PlayerType } from "@/providers/playerData";
 
 type Props = {
   x: number;
