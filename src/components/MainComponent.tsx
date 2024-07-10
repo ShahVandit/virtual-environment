@@ -72,7 +72,7 @@ export function MainComponent() {
 
   useEffect(() => {
     if (localParticipant) {
-      setMyPlayer((prev) => prev && { ...prev, character: "neymar" });
+      setMyPlayer((prev) => prev ? { ...prev, character: "neymar" }:prev)
     }
   }, [localParticipant, setMyPlayer]);
 
