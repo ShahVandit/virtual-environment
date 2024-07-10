@@ -28,12 +28,24 @@ type AudioSpeakerState_On = {
 
 export type AudioSpeakerState = AudioSpeakerState_Off | AudioSpeakerState_On;
 
+export type PlayerType = {
+  // Define the expected type for the character if it is not a string
+  id: string; // example if character is more complex than a string
+};
+
 export type Player = {
   username: string;
   position: Vector2;
   animation: AnimationState;
-  character: string
+  character: PlayerType; // Update this to match the expected type in Avatar
 };
+
+// export type Player = {
+//   username: string;
+//   position: Vector2;
+//   animation: AnimationState;
+//   character: string
+// };
 
 export const useGameState = () => {
   const [inputs, setInputs] = useState<Inputs>({ direction: { x: 0, y: 0 } });

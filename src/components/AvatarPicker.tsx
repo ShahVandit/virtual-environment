@@ -1,17 +1,17 @@
 import Image from "next/image";
 
-export type PlayerType = "messi" | "ronaldo" | "neymar" | "haaland";
+export type PlayerTypes = "messi" | "ronaldo" | "neymar" | "haaland";
 
 type AvatarPickerProps = {
-  selectedAvatar: PlayerType;
-  onAvatarChange: (playerType: PlayerType) => void;
+  selectedAvatar: PlayerTypes;
+  onAvatarChange: (playerType: PlayerTypes) => void;
 };
 
 export const AvatarPicker = ({
   selectedAvatar,
   onAvatarChange,
 }: AvatarPickerProps) => {
-  const avatarList: PlayerType[] = ["messi", "ronaldo", "neymar", "haaland"];
+  const avatarList: PlayerTypes[] = ["messi", "ronaldo", "neymar", "haaland"];
 
   return (
     <div>
@@ -35,7 +35,7 @@ export const AvatarPicker = ({
 };
 
 type AvatarProps = {
-  playerName: PlayerType;
+  playerName: PlayerTypes;
   imagePath: string;
   isActive: boolean;
 };
