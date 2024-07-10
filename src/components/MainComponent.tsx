@@ -28,7 +28,7 @@ import { PixiWithContext } from "./PixiWithContext";
 import { SpatialAudioSpeaker } from "./SpatialAudioSpeaker";
 import { SpatialAudioDialog } from "./SpatialAudioDialog";
 import { AudioProvider } from "@/controller/AudioSpeaker";
-import { fetchRemoteTracks } from "@/controller/fetchRemoteTracks";
+import { FetchRemoteTracks } from "@/controller/FetchRemoteTracks";
 
 export function MainComponent() {
   const [earshotRadius, setEarshotRadius] = useState(150);
@@ -90,7 +90,7 @@ export function MainComponent() {
     );
   }, [speakerPosition.x, speakerPosition.y, myPlayer]);
 
-  const trackPositions = fetchRemoteTracks({
+  const trackPositions = FetchRemoteTracks({
     remotePlayers,
     speakerPosition: speakerPosition,
   });
