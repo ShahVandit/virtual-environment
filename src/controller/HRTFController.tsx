@@ -26,7 +26,7 @@ export const HRTFController: React.FC<HRTFControllerProps> = ({
   return (
     <>
       {trackPositions.map((tp) => (
-        <HRTFPlayback
+        <HRTFPlayback key={Number(tp.trackPublication.trackSid)}
           trackPublication={tp.trackPublication}
           position={tp.position}
           myPosition={myPosition}

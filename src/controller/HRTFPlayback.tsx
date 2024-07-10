@@ -6,6 +6,7 @@ import { Vector2 } from '@/providers/playerData';
 type SpatialPublicationPlaybackProps = {
   maxHearableDistance: number;
   trackPublication: TrackPublication;
+  key:TrackPublication,
   myPosition: Vector2;
   position: Vector2;
 };

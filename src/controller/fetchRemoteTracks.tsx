@@ -16,7 +16,7 @@ type Props = {
   remotePlayers: Player[];
 };
 
-export const fetchRemoteTracks = ({
+export const FetchRemoteTracks = ({
   speakerPosition,
   remotePlayers,
 }: Props) => {
