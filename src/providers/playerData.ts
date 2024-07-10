@@ -32,7 +32,7 @@ export type Player = {
   username: string;
   position: Vector2;
   animation: AnimationState;
-  character: Player
+  character: string
 };
 
 export const useGameState = () => {

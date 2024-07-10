@@ -44,7 +44,6 @@ export function MainComponent() {
   });
   const localSpeaking = useIsSpeaking(localParticipant);
   const speakingParticipants = useSpeakingParticipants();
-  const gameState = useGameState();
 
   const {
     inputs,
